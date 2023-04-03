@@ -1,0 +1,23 @@
+package TDAStack;
+import Exceptions.EmptyStackException;
+
+public class ArrayStack<E> implemnts Stack {
+
+	public ArrayStack() {
+		
+	}
+	
+	public int size() {
+		
+	}
+	
+	public boolean isEmpty() {
+		
+	}
+	
+	public E top() throws EmptyStackException {
+		
+	}
+	
+	
+}

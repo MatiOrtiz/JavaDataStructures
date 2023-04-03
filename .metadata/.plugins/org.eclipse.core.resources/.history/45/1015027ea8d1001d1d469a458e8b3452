@@ -1,0 +1,5 @@
+package TDAStack;
+
+public class LinkedStack<E> {
+
+}

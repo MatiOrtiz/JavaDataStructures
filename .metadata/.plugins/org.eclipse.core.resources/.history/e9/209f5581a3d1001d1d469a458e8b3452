@@ -1,0 +1,37 @@
+package TDAStack;
+import Exceptions.EmptyStackException;
+
+public class ArrayStack<E> implements Stack<E> {
+
+	protected E[] array;
+	protected int size;
+	
+	public ArrayStack(int max) {
+		array= (E[]) new Object[max];
+		size= max;
+	}
+	
+	public int size() {
+		int cont= 0;
+		for(int i=0; i<size && array[i]!=null; i++) {
+			cont++;
+		}
+		return cont;
+	}
+	
+	public boolean isEmpty() {
+		
+	}
+	
+	public E top() throws EmptyStackException {
+		
+	}
+	
+	public void push() {
+		
+	}
+	
+	public E pop() throws EmptyStackException {
+		
+	}
+}

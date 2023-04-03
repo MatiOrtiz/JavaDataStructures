@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;TDAStack.NodeStack&apos; to &apos;LinkedStack&apos;&#x0D;&#x0A;- Original project: &apos;DataStructures&apos;&#x0D;&#x0A;- Original element: &apos;TDAStack.NodeStack&apos;&#x0D;&#x0A;- Renamed element: &apos;TDAStack.LinkedStack&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;NodeStack&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;TDAStack{NodeStack.java[NodeStack" matchStrategy="1" name="LinkedStack" qualified="false" references="true" similarDeclarations="false" stamp="1680475646091" textual="false" version="1.0"/>
+</session>
