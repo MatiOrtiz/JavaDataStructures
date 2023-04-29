@@ -1,4 +1,4 @@
-package TDAStack;
+package ADTStack;
 
 public class Person {
 

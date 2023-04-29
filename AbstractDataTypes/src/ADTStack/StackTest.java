@@ -1,7 +1,8 @@
-package TDAStack;
-import Exceptions.EmptyStackException;
+package ADTStack;
+
 import org.junit.*;                         //For tags
 import static org.junit.Assert.*;           //For assertions
+import Exceptions.EmptyStackException;
 
 public class StackTest {
 	private Stack<String> s; //interface
@@ -117,3 +118,5 @@ public class StackTest {
  
 
 }
+  
+    

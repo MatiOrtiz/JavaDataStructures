@@ -1,4 +1,5 @@
-package TDAStack;
+package ADTStack;
+
 import Exceptions.EmptyStackException;
 
 public interface Stack<E> {
