@@ -15,7 +15,9 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 		header= new DNode<E>(null);
 		trailer= new DNode<E>(null);
 		header.setPrev(null);
+		header.setNext(trailer);
 		trailer.setNext(null);
+		trailer.setPrev(header);
 		size= 0;
 	}
 	
@@ -51,22 +53,20 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 
 	public Position<E> next(Position<E> p) throws InvalidPositionException, BoundaryViolationException {
 		DNode<E> node= checkPosition(p);
-		if(node==trailer)
+		if(node==trailer.getPrev())
 			throw new BoundaryViolationException("The position is the last in the list.");
 		return node.getNext();
 	}
 
 	public Position<E> prev(Position<E> p) throws InvalidPositionException, BoundaryViolationException {
 		DNode<E> node= checkPosition(p);
-		if(node==header)
+		if(node==header.getNext())
 			throw new BoundaryViolationException("The position is the first in the list.");
 		return node.getPrev();
 	}
 
 	public void addFirst(E element) {
-		DNode<E> node= new DNode<E>(element);
-		node.setNext(header.getNext());
-		node.setPrev(header);
+		DNode<E> node= new DNode<E>(element, header, header.getNext());
 		header.getNext().setPrev(node);
 		header.setNext(node);
 		size++;
@@ -76,9 +76,7 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 		if(isEmpty())
 			addFirst(element);
 		else {
-			DNode<E> node= new DNode<E>(element);
-			node.setPrev(trailer.getPrev());
-			node.setNext(trailer);
+			DNode<E> node= new DNode<E>(element, trailer.getPrev(), trailer);
 			trailer.getPrev().setNext(node);
 			trailer.setPrev(node);
 			size++;
@@ -87,9 +85,7 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 
 	public void addAfter(Position<E> p, E element) throws InvalidPositionException {
 		DNode<E> nodeAux= checkPosition(p);
-		DNode<E> node= new DNode<E>(element);
-		node.setPrev(nodeAux);
-		node.setNext(nodeAux.getNext());
+		DNode<E> node= new DNode<E>(element, nodeAux, nodeAux.getNext());
 		nodeAux.getNext().setPrev(node);
 		nodeAux.setNext(node);
 		size++;
@@ -97,9 +93,7 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 
 	public void addBefore(Position<E> p, E element) throws InvalidPositionException {
 		DNode<E> nodeAux= checkPosition(p);
-		DNode<E> node= new DNode<E>(element);
-		node.setNext(nodeAux);
-		node.setPrev(nodeAux.getPrev());
+		DNode<E> node= new DNode<E>(element, nodeAux.getPrev(), nodeAux);
 		nodeAux.getPrev().setNext(node);
 		nodeAux.setPrev(node);
 		size++;
@@ -110,10 +104,10 @@ public class DoubleLinkedList<E> implements PositionList<E> {
 		E removed= node.element();
 		node.getPrev().setNext(node.getNext());
 		node.getNext().setPrev(node.getPrev());
-		size--;
 		node.setElement(null);
 		node.setNext(null);
 		node.setPrev(null);
+		size--;
 		return removed;
 	}
 

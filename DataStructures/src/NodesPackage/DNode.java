@@ -6,10 +6,14 @@ public class DNode<E> implements Position<E> {
 	protected DNode<E> prev, next;
 	protected E element;
 	
-	public DNode(E element) {
+	public DNode(E element, DNode<E>prev, DNode<E> next) {
 		this.element= element;
-		prev= null;
-		next= null;
+		this.prev= prev;
+		this.next= next;
+	}
+	
+	public DNode(E element) {
+		this(element, null, null);
 	}
 	
 	public void setElement(E e) {
