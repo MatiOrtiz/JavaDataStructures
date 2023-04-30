@@ -26,7 +26,7 @@ public class LNode<E> implements Position<E> {
 	public LNode<E> getNext() {
 		return next;
 	}
-	public E getElement() {
+	public E element() {
 		return element;
 	}
 	

@@ -99,7 +99,7 @@ public interface PositionList<E> extends Iterable<E> {
 	public E set(Position<E> p, E element) throws InvalidPositionException;
 	
 	/**
-	 * Devuelve un un iterador de todos los elementos de la lista.
+	 * Devuelve un iterador de todos los elementos de la lista.
 	 * @return Un iterador de todos los elementos de la lista.
 	 */
 	public Iterator<E> iterator();
