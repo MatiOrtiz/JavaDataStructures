@@ -126,7 +126,7 @@ public class LinkedList<E> implements PositionList<E> {
 	}
 
 	public Iterator<E> iterator() {
-		return new ElementIterator(this);
+		return new ElementIterator<E>(this);
 	}
 
 	public Iterable<Position<E>> positions() {
