@@ -1,5 +1,7 @@
 package ADTMap;
 
+import java.util.Iterator;
+
 import ADTList.*;
 import Exceptions.InvalidKeyException;
 import Exceptions.InvalidPositionException;
@@ -139,5 +141,26 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		return iterable;
 	}
 
+	public Map<V,K> invertedMap(Map<K,V> m) throws InvalidKeyException{
+		Map<V,K> map= new OpenHashMap<V,K>();
+		for(Entry<K,V> e : m.entries()) {
+			map.put(e.getValue(), e.getKey());
+		}
+		return map;
+	}
+	
+	public boolean contained(Map<K,V> m1, Map<K,V> m2) {
+		boolean is= true;
+		Iterator<Entry<K,V>> it1= m1.entries().iterator();
+		while(it1.hasNext() && is==true) {
+			Iterator<Entry<K,V>> it2= m2.entries().iterator();
+			while(it2.hasNext() && !it2.next().equals(it1.next()))
+				it2.next();
+			if(!it1.next().equals(it2))
+				is= false;
+		}
+		return is;
+	}
+	
 }
 

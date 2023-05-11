@@ -1,4 +1,6 @@
 package ADTMap;
+import java.util.Iterator;
+
 import ADTList.DoubleLinkedList;
 import ADTList.Position;
 import ADTList.PositionList;
@@ -95,6 +97,19 @@ public class ListMap<K,V> implements Map<K,V> {
 					list.addLast(e2);
 				}
 			}
+		}
+		return list;
+	}
+	
+	public PositionList<Entry<K,V>> luNotas1(Map<K,V> m1, Map<K,V> m2) {
+		PositionList<Entry<K,V>> list= new DoubleLinkedList<Entry<K,V>>();
+		for(Entry<K,V> e : m1.entries()) {
+			Iterator<Entry<K,V>> it= m1.entries().iterator();
+			while(it.hasNext() && !it.next().getKey().equals(e.getKey())) {
+				it.next();
+			}
+			if(e.getKey().equals(it.next().getKey()))
+				list.addLast(e);
 		}
 		return list;
 	}
