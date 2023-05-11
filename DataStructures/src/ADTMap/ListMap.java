@@ -1,6 +1,7 @@
 package ADTMap;
 import ADTList.DoubleLinkedList;
 import ADTList.Position;
+import ADTList.PositionList;
 import Exceptions.InvalidKeyException;
 import Exceptions.InvalidPositionException;
 
@@ -81,6 +82,21 @@ public class ListMap<K,V> implements Map<K,V> {
 		for(Position<Entrance<K,V>> p : list.positions())
 			iterable.addLast(p.element());
 		return iterable;
+	}
+	
+	
+	//Extra Method: return a list with the entries that have the same key.
+	public PositionList<Entry<K,V>> luNotas(Map<K,V> m1, Map<K,V> m2) {
+		PositionList<Entry<K,V>> list= new DoubleLinkedList<Entry<K,V>>();
+		for(Entry<K,V> e1 : m1.entries()) {
+			for(Entry<K,V> e2 : m2.entries()) {
+				if(e1.getKey().equals(e2.getKey())) {
+					list.addLast(e1);
+					list.addLast(e2);
+				}
+			}
+		}
+		return list;
 	}
 
 }

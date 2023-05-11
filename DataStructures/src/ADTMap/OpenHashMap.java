@@ -51,7 +51,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	
 	private void reHash() {
 		Iterable<Entry<K,V>> entrances= entries();
-		N= nextPrime(N);
+		N= nextPrime(N*2);
 		n= 0;
 		try {
 			array= new PositionList[N];
