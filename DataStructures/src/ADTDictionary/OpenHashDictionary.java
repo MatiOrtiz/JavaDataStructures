@@ -130,5 +130,23 @@ public class OpenHashDictionary<K,V> implements Dictionary<K,V> {
 				iterable.addLast(e);
 		return iterable;
 	}
+	
+	
+	//ExtraMethod
+	
+	public Dictionary<K,V> acommodate(Dictionary<K,V> d) {
+		Dictionary<K,V> dict= new OpenHashDictionary<K,V>();
+		try {
+			for(Entry<K,V> e : d.entries()) {
+				if(dict.find(e.getKey())==null) {
+					dict.insert(e.getKey(), e.getValue());
+				} else {
+					dict.remove(e);
+					dict.insert(e.getKey(), e.getValue());
+				}
+			}
+		} catch(InvalidEntryException | InvalidKeyException exc) {exc.getMessage();}
+		return dict;
+	}
 
 }
