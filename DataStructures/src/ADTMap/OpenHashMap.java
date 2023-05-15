@@ -56,7 +56,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		N= nextPrime(N*2);
 		n= 0;
 		try {
-			array= new PositionList[N];
+			array= new DoubleLinkedList[N];
 			for(int i=0; i<N; i++)
 				array[i]= new DoubleLinkedList<Entrance<K,V>>();
 			for(Entry<K,V> e : entrances)
@@ -152,13 +152,13 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	public boolean contained(Map<K,V> m1, Map<K,V> m2) {
 		boolean is= true;
 		Iterator<Entry<K,V>> it1= m1.entries().iterator();
-		while(it1.hasNext() && is==true) {
-			Iterator<Entry<K,V>> it2= m2.entries().iterator();
-			while(it2.hasNext() && !it2.next().equals(it1.next()))
-				it2.next();
-			if(!it1.next().equals(it2.next()))
-				is= false;
-		}
+		try {
+			for(Entry<K,V> e : m1.entries()) {
+				if(m2.get(e.getKey())!=null)
+					is= true;
+				else is= false;
+			}
+		} catch(InvalidKeyException e) {e.getMessage();}
 		return is;
 	}
 	

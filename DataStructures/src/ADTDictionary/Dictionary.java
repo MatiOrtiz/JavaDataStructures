@@ -1,5 +1,9 @@
 package ADTDictionary;
 
+import ADTMap.Entry;
+import Exceptions.InvalidEntryException;
+import Exceptions.InvalidKeyException;
+
 public interface Dictionary<K,V>
 {
 	/**
