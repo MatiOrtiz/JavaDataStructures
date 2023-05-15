@@ -156,7 +156,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 			Iterator<Entry<K,V>> it2= m2.entries().iterator();
 			while(it2.hasNext() && !it2.next().equals(it1.next()))
 				it2.next();
-			if(!it1.next().equals(it2))
+			if(!it1.next().equals(it2.next()))
 				is= false;
 		}
 		return is;

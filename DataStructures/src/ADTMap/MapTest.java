@@ -18,7 +18,7 @@ public class MapTest {
 
 	private Map<Integer, Integer> getMapeo() {
 
-		return new CloseHashMap<Integer, Integer>();
+		return new OpenHashMap<Integer, Integer>();
 
 	}
 
