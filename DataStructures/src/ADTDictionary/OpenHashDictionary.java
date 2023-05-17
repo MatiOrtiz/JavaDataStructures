@@ -8,7 +8,7 @@ import ADTList.*;
 
 public class OpenHashDictionary<K,V> implements Dictionary<K,V> {
 
-	protected PositionList<Entrance<K,V>>[] array;
+	protected PositionList<Entry<K,V>>[] array;
 	protected int N;
 	protected int n;
 	protected static final float fc= 0.9F;
@@ -18,7 +18,7 @@ public class OpenHashDictionary<K,V> implements Dictionary<K,V> {
 		n= 0;
 		array= new DoubleLinkedList[N];
 		for(int i=0; i<N; i++)
-			array[i]= new DoubleLinkedList<Entrance<K,V>>();
+			array[i]= new DoubleLinkedList<Entry<K,V>>();
 	}
 	
 	public int size() {
@@ -85,7 +85,7 @@ public class OpenHashDictionary<K,V> implements Dictionary<K,V> {
 		try {
 			array= new DoubleLinkedList[N];
 			for(int i=0; i<N; i++)
-				array[i]= new DoubleLinkedList<Entrance<K,V>>();
+				array[i]= new DoubleLinkedList<Entry<K,V>>();
 			for(Entry<K,V> e : entrances)
 				this.insert(e.getKey(), e.getValue());
 		} catch(InvalidKeyException e) {e.getMessage();}
@@ -109,15 +109,15 @@ public class OpenHashDictionary<K,V> implements Dictionary<K,V> {
 		int aux= hashFunction(e.getKey());
 		boolean found= false;
 		try {
-			for(Position<Entrance<K,V>> en : array[aux].positions()) {
-				if(e.equals(en)) {
+			for(Position<Entry<K,V>> en : array[aux].positions()) {
+				if(en.element().equals(e)) {
 					entry= e;
 					array[aux].remove(en);
 					found= true;
 					n--;
 				}
 			}
-			if(found==true)
+			if(found==false)
 				throw new InvalidEntryException("The entry doesn't exists");
 		} catch(InvalidPositionException exc) {exc.getMessage();}
 		return entry;
