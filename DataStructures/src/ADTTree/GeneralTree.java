@@ -293,7 +293,7 @@ public class GeneralTree<E> implements Tree<E> {
 			}catch(EmptyTreeException | EmptyListException | InvalidPositionException e) {e.getMessage();} 
 		}
 		
-		public PositionList<TNode<E>> hijosExtIzq(Tree<E> t) {
+		public PositionList<TNode<E>> leftChildren(Tree<E> t) {
 			PositionList<TNode<E>> list= new DoubleLinkedList<TNode<E>>();
 			try {
 				TNode<E> node= (TNode<E>) t.root();
@@ -306,6 +306,18 @@ public class GeneralTree<E> implements Tree<E> {
 				}
 			}catch(EmptyTreeException | EmptyListException | InvalidPositionException e) {e.getMessage();}
 			return list;
+		}
+		
+		public void removeLeftChildren(Tree<E> t) {
+			try {
+				TNode<E> node= (TNode<E>) t.root();
+				while(t.isInternal(node)) {
+					TNode<E> leftChild= node.getChildren().first().element();
+					if(t.isInternal(leftChild)) 
+						t.removeInternalNode(leftChild);
+					node= leftChild;
+				}
+			} catch(EmptyTreeException | InvalidPositionException | EmptyListException e) {e.getMessage();}
 		}
 		
 		
