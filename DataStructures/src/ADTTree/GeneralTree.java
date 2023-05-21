@@ -241,25 +241,29 @@ public class GeneralTree<E> implements Tree<E> {
 		}
 		
 		//Calcula la profundidad (desde el nodo hacia arriba)
-		public int depth(TNode<E> n) {
+		public int depth(Position<E> p, Tree<E> t) {
 			int depth= 0;
-			if(n==root)
-				depth= 0;
-			else depth= 1 + depth(n.getParent());
+			TNode<E> node= (TNode<E>) p;
+			try {
+				if(t.isRoot(node))
+					depth= 0;
+				else depth= 1 + depth(t.parent(node),t);
+			}catch(InvalidPositionException | BoundaryViolationException e) {e.getMessage();}
 			return depth;
 		}
 		
 		//Calcula la altura(desde el nodo hacia abajo)
-		public int height(TNode<E> node) {
+		public int height(Position<E> p, Tree<E> t) {
 			int height= 0;
 			int h;
+			TNode<E> node= (TNode<E>) p;
 			try { 
-				if(isExternal(node))
+				if(t.isExternal(node))
 					height= 0;
 				else {
 					h= 0;
 					for(TNode<E> n : node.getChildren()) {
-						h= Math.max(height(n), h);
+						h= Math.max(height(n,t), h);
 						height= h+1;
 					}
 				}
@@ -276,7 +280,7 @@ public class GeneralTree<E> implements Tree<E> {
 				node= (TNode<E>)t.root();
 				list.addFirst(node);
 				list.addLast(null);
-				int height= height(node);
+				int height= height(node,t);
 				for(int i=1; i<height; i++) {
 					for(TNode<E> n : node.getChildren()) {
 						list.addLast(n);
@@ -350,6 +354,17 @@ public class GeneralTree<E> implements Tree<E> {
 			} catch(InvalidPositionException e) {e.getMessage();}
 		}
 		
+		public int heightR(E r, Tree<E> t) throws InvalidPositionException {
+			Iterable<Position<E>> iterable= t.positions();
+			TNode<E> node= null;
+			for(Position<E> p : iterable) {
+				if(p.element().equals(r))
+					node= (TNode<E>) p;
+			}
+			if(node.element()==null)
+				throw new InvalidPositionException("The node doesn't exists in the tree.");
+			return height(node,t);
+		}
 		
 }
 
