@@ -320,6 +320,26 @@ public class GeneralTree<E> implements Tree<E> {
 			} catch(EmptyTreeException | InvalidPositionException | EmptyListException e) {e.getMessage();}
 		}
 		
+		public void removeExternalChildren(Tree<E> t) {
+			try {
+				TNode<E> node= (TNode<E>) t.root();
+				PositionList<TNode<E>> list= new DoubleLinkedList<TNode<E>>();
+				list.addFirst(node);
+				while(!list.isEmpty()) {
+					for(TNode<E> n : list) {
+						if(t.isExternal(n))
+							t.removeExternalNode(n);
+						else {
+							for(TNode<E> m : n.getChildren()) {
+								list.addLast(m);
+							}
+						}
+						list.remove(list.first());
+					}
+				}
+			} catch(EmptyTreeException | EmptyListException | InvalidPositionException e) {e.getMessage();}
+		}
+		
 		
 }
 
