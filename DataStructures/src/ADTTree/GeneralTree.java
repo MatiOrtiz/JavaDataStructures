@@ -340,6 +340,16 @@ public class GeneralTree<E> implements Tree<E> {
 			} catch(EmptyTreeException | EmptyListException | InvalidPositionException e) {e.getMessage();}
 		}
 		
+		public void removeNodeR(E r) {
+			Iterable<Position<E>> iterable= this.positions();
+			try {
+				for(Position<E> p : iterable) {
+					if(p.element().equals(r))
+						removeNode(p);
+				}
+			} catch(InvalidPositionException e) {e.getMessage();}
+		}
+		
 		
 }
 
