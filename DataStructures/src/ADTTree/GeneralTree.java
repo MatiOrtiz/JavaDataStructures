@@ -397,6 +397,32 @@ public class GeneralTree<E> implements Tree<E> {
 			}catch(InvalidPositionException e){e.getMessage();}
 		}
 		
+		public TNode<E> firstCommonAncestor(Position<E> p1, Position<E> p2, Tree<E> t) throws InvalidPositionException {
+			TNode<E> node= null;
+			try {
+				TNode<E> n1= checkPosition(p1).getParent();
+				TNode<E> n2= checkPosition(p2).getParent();
+				while(!n1.equals(n2) && !t.isRoot(n1) && !t.isRoot(n2) && n1.getParent()!=null && n2.getParent()!=null) {
+					n1= n1.getParent();
+					n2= n2.getParent();
+				}
+				if(n1.equals(n2))
+					node= n1;
+				else{ 
+					if(t.isRoot(n1))
+						while(!t.isRoot(n2) && n2.getParent()!=null)
+					 		n2= n2.getParent();
+					else while(!t.isRoot(n1) && n1.getParent()!=null)
+						n1= n1.getParent();
+					if(n1.equals(n2))
+						node= n1;
+				}
+				if(node==null)
+					throw new InvalidPositionException("Any position is invalid.");
+			} catch(InvalidPositionException e) {e.getMessage();}
+			return node;
+		}
+		
 }
 
 /*
