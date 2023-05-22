@@ -366,6 +366,15 @@ public class GeneralTree<E> implements Tree<E> {
 			return height(node,t);
 		}
 		
+		public void addRightChild(int a, E r) {
+			Iterable<Position<E>> iterable= positions();
+			for(Position<E> p : iterable) {
+				TNode<E> n= (TNode<E>) p;
+				if(height(n,this)==a)
+					n.getChildren().addLast(new TNode<E>(r,n));
+			}
+		}
+		
 }
 
 /*
