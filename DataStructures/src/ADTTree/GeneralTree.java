@@ -375,6 +375,28 @@ public class GeneralTree<E> implements Tree<E> {
 			}
 		}
 		
+		private void invertList(PositionList<TNode<E>> p) {
+			try {
+				TNode<E> head= p.first().element();
+				while(!p.last().element().equals(head)) {
+					p.addFirst(p.last().element());
+					p.remove(p.last());
+				}
+			}catch(EmptyListException | InvalidPositionException e) {e.getMessage();}
+		}
+		
+		public void invertChildren(E r) {
+			Iterable<Position<E>> iterable= positions();
+			try {
+				for(Position<E> p : iterable) {
+					TNode<E> n= (TNode<E>) p;
+					if(isInternal(n) && n.element().equals(r)) {
+						invertList(n.getChildren());
+					}
+				}
+			}catch(InvalidPositionException e){e.getMessage();}
+		}
+		
 }
 
 /*
