@@ -47,7 +47,7 @@ public interface BinaryTree<E> extends GTTree<E>
 	 * @param E R�tulo que se asignar� a la ra�z del �rbol.
 	 * @throws InvalidOperationException si el �rbol ya tiene un nodo ra�z.
 	 */
-	public void createRoot(E r) throws InvalidOperationException;
+	public Position<E> createRoot(E r) throws InvalidOperationException;
 	
 	
 	/**
