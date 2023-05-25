@@ -159,55 +159,51 @@ public class GeneralTree<E> implements Tree<E> {
 			TNode<E> node= checkPosition(p);
 			if(isEmpty() || isInternal(node))
 				throw new InvalidPositionException("The tree is empty or the node is internal.");
-			if(node==root) {
-				root= null;
-				size= 0;
-			} else {
-				Iterator<Position<TNode<E>>> it= root.getChildren().positions().iterator();
-				TNode<E> parent= node.getParent();
-				while(it.hasNext() && !it.next().element().equals(node))
-					it.next();
-				parent.getChildren().remove(it.next());
-				size--;
-			}
+			if(isExternal(p))
+				removeNode(p);
 		}
 
 		public void removeInternalNode(Position<E> p) throws InvalidPositionException {
 			TNode<E> node= checkPosition(p);
 			if(isEmpty() || isExternal(node))
 				throw new InvalidPositionException("The tree is empty or the node is external.");
-			try {
-				if(node==root) { 
-					if(node.getChildren().size()>1) 
-						throw new InvalidPositionException("The tree has more than one child.");
-					root= root.getChildren().first().element();
-					root.getChildren().remove(root.getChildren().first());
-					size--;
-				} else {
-					TNode<E> parent= node.getParent();
-					Iterator<Position<TNode<E>>> it= parent.getChildren().positions().iterator();
-					
-					while(it.hasNext() && !it.next().element().equals(node))
-						it.next();
-					if(!it.hasNext() && !it.next().element().equals(node))
-						throw new InvalidPositionException("The node doesn't exists in the tree");
-					
-					for(TNode<E> n : node.getChildren()) {
-						n.setParent(parent);
-						parent.getChildren().addBefore(it.next(), n);
-					}
-					parent.getChildren().remove(it.next());
-					size--;
-				}
-			}catch(EmptyListException e) { e.getMessage();}
-			
+			if(isInternal(p))
+				removeNode(p);
 		}
 
 		public void removeNode(Position<E> p) throws InvalidPositionException {
+			if(size==0)
+				throw new InvalidPositionException("The tree is empty.");
 			TNode<E> node= checkPosition(p);
-			if(isExternal(node))
-				removeExternalNode(node);
-			else removeInternalNode(node);
+			try {
+				if(node==root) {
+					if(node.getChildren().size()==1) {
+						Position<TNode<E>> newRoot= node.getChildren().first();
+						root= newRoot.element();
+						root.setParent(null);
+						size--;
+					} else if(size==1) {
+						root= null;
+						size--;
+					} else throw new InvalidPositionException("The root has more than one child.");
+				} else {
+					TNode<E> parent= node.getParent();
+					PositionList<TNode<E>> nodesChildren= node.getChildren();
+					PositionList<TNode<E>> parentsChildren= parent.getChildren();
+					Iterator<Position<TNode<E>>> it= parentsChildren.positions().iterator();
+					while(it.hasNext() && it.next()!=node) 
+						it.next();
+					while(!parentsChildren.isEmpty()) {
+						Position<TNode<E>> toInsert= nodesChildren.first();
+						parentsChildren.addBefore(it.next(), toInsert.element());
+						toInsert.element().setParent(parent);
+						nodesChildren.remove(toInsert);
+					}
+					parentsChildren.remove(it.next());
+					size--;
+				}
+				
+			} catch(EmptyListException e) {throw new InvalidPositionException("The node cannot remove.");}
 		}
 		
 		public PositionList<Position<E>> recorrer(Tree<E> t) {
