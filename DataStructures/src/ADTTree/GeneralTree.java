@@ -193,7 +193,7 @@ public class GeneralTree<E> implements Tree<E> {
 					Iterator<Position<TNode<E>>> it= parentsChildren.positions().iterator();
 					while(it.hasNext() && it.next()!=node) 
 						it.next();
-					while(!parentsChildren.isEmpty()) {
+					while(!nodesChildren.isEmpty()) {
 						Position<TNode<E>> toInsert= nodesChildren.first();
 						parentsChildren.addBefore(it.next(), toInsert.element());
 						toInsert.element().setParent(parent);
