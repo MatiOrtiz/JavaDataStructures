@@ -180,34 +180,49 @@ public class BTree<E> implements BinaryTree<E> {
 		return (BTNode<E>) p;
 	}
 	
-	public BTNode<E> clone(BTNode<E> node) {
-		BTNode<E> n;
-		if(node==null)
-			n= null;
-		n= new BTNode<E>(node.element(), node.parent());
-		n.setLeft(clone(node.left()));
-		n.setRight(clone(node.right()));
-		return n;
+	public BinaryTree<E> clone() {
+		BinaryTree<E> t= new BTree<E>();
+		try {
+			if(!isEmpty()) {
+				BTNode<E> node= (BTNode<E>) t.createRoot(root.element());
+				cloneRec(t, root, node);
+			}
+		}catch(InvalidPositionException e) {e.getMessage();}
+		return t;
 	}
 	
-	//TODO Check how to do the mirror method.
+	public void cloneRec(BinaryTree<E> t, BTNode<E> n, BTNode<E> rootT) {
+		BTNode<E> node;
+		try {
+			if(hasLeft(n)) {
+				node= (BTNode<E>) t.addLeft(rootT,n.left().element());
+				cloneRec(t, (BTNode<E>)n.left(), node);
+			}
+			if(hasRight(n)) {
+				node= (BTNode<E>) t.addRight(rootT, n.right().element());
+				cloneRec(t,(BTNode<E>)n.right(), node);
+			}
+		}catch(InvalidOperationException | InvalidPositionException e) {e.getMessage();}
+	}
+	
 	public BinaryTree<E> mirror(BTree<E> t) {
-		BinaryTree<E> bt= new BTree<E>();
-		BTNode<E> node= (BTNode<E>) t.root();
-		BTNode<E>newNode= t.clone(node);
-		
+		BinaryTree<E> bt= t.clone();
+		try {
+			BTNode<E> rootBt= (BTNode<E>) bt.root();
+			invert(rootBt);
+		} catch(EmptyTreeException e) {e.getMessage();}
+		return bt;
 	}
 	
 	private void invert(BTNode<E> n) {
-		BTNode<E> node= n;
-		BTNode<E> parent= node.parent();
-		BTNode<E> aux= parent.left();
-		parent.setLeft(parent.right());
-		parent.setRight(aux);
-		try {
-			if(hasLeft(node) || hasRight(node))
-				invert(node);
-		}catch(InvalidPositionException e) {e.getMessage();}
+		BTNode<E> aux= n.left();
+		n.setLeft(n.right());
+		n.setRight(aux);
+		
+		if(n.left()!=null)
+			invert(n.left());
+		if(n.right()!=null)
+			invert(n.right());
 	}
 	
 }
