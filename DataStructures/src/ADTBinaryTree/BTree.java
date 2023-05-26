@@ -225,4 +225,31 @@ public class BTree<E> implements BinaryTree<E> {
 			invert(n.right());
 	}
 	
+	public int depth(Position<E> p, BinaryTree<E> t) {
+		int cont= 0;
+		try {
+			if(t.isRoot(p))
+				cont+=0;
+			else {
+				BTNode<E> node= checkPosition(p);
+				cont+= 1 + depth(node.parent(), t);
+			}
+		} catch(InvalidPositionException e) {e.getMessage();}
+		return cont;
+	}
+	
+	public int height(Position<E> p, BinaryTree<E> t) {
+		int cont= 0;
+		try {
+			if(t.isExternal(p))
+				cont+=0;
+			else {
+				BTNode<E> n= checkPosition(p);
+				if(n.left()!=null)
+					cont+= 1 + height(n.left(), t);
+				else cont+= 1 + height(n.right(), t);
+			}
+		}catch(InvalidPositionException e) {e.getMessage();}
+		return cont;
+	}
 }
