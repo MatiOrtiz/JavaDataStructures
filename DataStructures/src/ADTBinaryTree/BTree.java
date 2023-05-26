@@ -302,4 +302,16 @@ public class BTree<E> implements BinaryTree<E> {
 		return aux;
 	}
 	
+	//TODO how to compare the elements of the list's positions with the arithmetical signs. 
+	public void arithmeticExpression(BinaryTree<E> t) {
+		PositionList<Position<E>> list= new DoubleLinkedList<Position<E>>();
+		try {
+			preOrder((BTNode<E>)t.root(), list);
+		} catch(EmptyTreeException e) {e.getMessage();}
+		for(Position<E> p : list) {
+			
+		}
+	}
+	
+	
 }
