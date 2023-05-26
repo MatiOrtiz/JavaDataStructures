@@ -270,8 +270,19 @@ public class BTree<E> implements BinaryTree<E> {
 	}
 	
 	public boolean subTree(BinaryTree<E> t, BinaryTree<E> t1) {
-		try {
-			BTNode<E> n1= (BTNode<E>) t1.root();
-		} catch(EmptyTreeException e) {e.getMessage();}
+		boolean aux= true;
+		if(t1.size()>t.size())
+			aux= false;
+		else try {
+				BTNode<E> n1= (BTNode<E>) t1.root();
+				Iterator<Position<E>> it= t.positions().iterator();
+				while(it.hasNext() && it.next()!=n1) 
+					it.next();
+				if(n1==it.next())
+					aux= t1.children(n1)==t.children(it.next());
+				else aux= false;
+		} catch(EmptyTreeException | InvalidPositionException e) {e.getMessage();}
+		return aux;
 	}
+	
 }
