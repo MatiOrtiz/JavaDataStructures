@@ -285,4 +285,21 @@ public class BTree<E> implements BinaryTree<E> {
 		return aux;
 	}
 	
+	public boolean equals(BinaryTree<E> t1, BinaryTree<E> t2) {
+		boolean aux= true;
+		if(t1.size()!= t2.size())
+			aux= false;
+		else {
+			Iterator<Position<E>> it1= t1.positions().iterator();
+			Iterator<Position<E>> it2= t2.positions().iterator();
+			while(it1.hasNext() && aux==true) {
+				BTNode<E>n1= (BTNode<E>) it1.next();
+				BTNode<E>n2= (BTNode<E>) it2.next();
+				if(!n1.equals(n2))
+					aux= false;
+			}
+		}
+		return aux;
+	}
+	
 }
