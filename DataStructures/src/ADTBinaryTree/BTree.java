@@ -252,4 +252,26 @@ public class BTree<E> implements BinaryTree<E> {
 		}catch(InvalidPositionException e) {e.getMessage();}
 		return cont;
 	}
+	
+	public boolean isOwn(BinaryTree<E> t) {
+		boolean aux= true;
+		try {
+			if(t.size()==1)
+				aux= true;
+			else {
+				Iterator<Position<E>> it= t.positions().iterator();
+				while(it.hasNext() && aux==true) {
+					if((t.hasLeft(it.next()) && !t.hasRight(it.next())) || (!t.hasLeft(it.next()) && t.hasRight(it.next())))
+						aux= false;
+				}
+			}
+		} catch(InvalidPositionException e) {e.getMessage();}
+		return aux;
+	}
+	
+	public boolean subTree(BinaryTree<E> t, BinaryTree<E> t1) {
+		try {
+			BTNode<E> n1= (BTNode<E>) t1.root();
+		} catch(EmptyTreeException e) {e.getMessage();}
+	}
 }
