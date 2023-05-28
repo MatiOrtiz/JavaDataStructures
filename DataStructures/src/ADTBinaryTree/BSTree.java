@@ -32,10 +32,16 @@ public class BSTree<E extends Comparable<E>> {
 		return node;
 	}
 	
+	/**
+	 * Creates two dummies for the node n 
+	 * @param n node that will has the nodes
+	 */
 	public void extend(BSTNode<E> n) {
-		
+		n.setLeft(new BSTNode<E>(null,n));
+		n.setRight(new BSTNode<E>(null,n));
 	}
 	
+	//TODO
 	public void remove(E x) {
 		
 	}
