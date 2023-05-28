@@ -2,6 +2,7 @@ package ADTPriorityQueue;
 
 import Exceptions.EmptyPriorityQueueException;
 import Exceptions.InvalidKeyException;
+import ADTDictionary.Dictionary;
 import ADTList.*;
 import ADTMap.*;
 
@@ -112,6 +113,18 @@ public class HeapPQueue<K,V> implements PriorityQueue<K,V> {
 					pQ.removeMin();
 		}catch(EmptyPriorityQueueException e) {e.getMessage();}
 		return pQ;
+	}
+	
+	public int[] orderValues(Dictionary<Character, Integer>d) {
+		PriorityQueue<Character,Integer> pQ= new HeapPQueue<Character,Integer>(new Comparator<Character>());
+		int[] array= new int[d.size()];
+		try {
+			for(Entry<Character,Integer> e : d.entries()) 
+				pQ.insert(e.getKey(), e.getValue());
+			for(int i=0; i<array.length; i++)
+				array[i]= pQ.removeMin().getValue();
+		} catch(InvalidKeyException | EmptyPriorityQueueException exc) {exc.getMessage();}
+		return array;
 	}
 	
 }

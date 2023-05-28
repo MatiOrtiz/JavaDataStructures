@@ -1,4 +1,5 @@
 package ADTPriorityQueue;
+
 import ADTList.*;
 import ADTMap.Entrance;
 import ADTMap.Entry;
