@@ -2,6 +2,7 @@ package ADTPriorityQueue;
 
 import Exceptions.EmptyPriorityQueueException;
 import Exceptions.InvalidKeyException;
+import ADTList.*;
 import ADTMap.*;
 
 public class HeapPQueue<K,V> implements PriorityQueue<K,V> {
@@ -103,4 +104,14 @@ public class HeapPQueue<K,V> implements PriorityQueue<K,V> {
 		}catch(InvalidKeyException | EmptyPriorityQueueException e) {e.getMessage();}
 		return a;
 	}
+	
+	public PriorityQueue<Student,FinalExam> bestStudents(int k, HeapPQueue<Student,FinalExam> pQ) {
+		try { 
+			if(!pQ.isEmpty())
+				while(pQ.size()>k)
+					pQ.removeMin();
+		}catch(EmptyPriorityQueueException e) {e.getMessage();}
+		return pQ;
+	}
+	
 }
