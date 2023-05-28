@@ -3,7 +3,6 @@ package ADTPriorityQueue;
 import Exceptions.EmptyPriorityQueueException;
 import Exceptions.InvalidKeyException;
 import ADTDictionary.Dictionary;
-import ADTList.*;
 import ADTMap.*;
 
 public class HeapPQueue<K,V> implements PriorityQueue<K,V> {
