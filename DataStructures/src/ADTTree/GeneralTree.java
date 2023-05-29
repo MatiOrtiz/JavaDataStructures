@@ -124,33 +124,39 @@ public class GeneralTree<E> implements Tree<E> {
 			return node;
 		}
 		
-		//TODO: is not run
 		public Position<E> addBefore(Position<E> p, Position<E> rb, E e) throws InvalidPositionException {
 			TNode<E> parent= checkPosition(p);
 			TNode<E> brother= checkPosition(rb);
 			TNode<E> node= new TNode<E>(e, parent);
-			Iterator<Position<TNode<E>>> it= parent.getChildren().positions().iterator();
-			while(it.hasNext() && !it.next().element().equals(brother)) 
-				it.next();
-			if(!it.next().element().equals(brother))
-				throw new InvalidPositionException("The node p is not the rb's parent.");
-			parent.getChildren().addBefore(it.next(), node);
-			size++;
+			if(isEmpty())
+				throw new InvalidPositionException("The tree is empty.");
+			if(brother.getParent()!=parent)
+				throw new InvalidPositionException("The node p is not the rb's parent");
+			try {
+				Position<TNode<E>> pos= parent.getChildren().first();
+				while(pos!=parent.getChildren().last() && pos.element()!=brother) 
+					pos= parent.getChildren().next(pos);
+				parent.getChildren().addBefore(pos, node);
+				size++;
+			}catch(EmptyListException | BoundaryViolationException | InvalidPositionException exc) {exc.getMessage();}
 			return node;
 		}
 
-		//TODO: is not run
 		public Position<E> addAfter(Position<E> p, Position<E> lb, E e) throws InvalidPositionException {
 			TNode<E> parent= checkPosition(p);
 			TNode<E> brother= checkPosition(lb);
 			TNode<E> node= new TNode<E>(e, parent);
-			if(parent.getChildren().isEmpty())
-				throw new InvalidPositionException("The node parent hasn't any child.");
-			Iterator<Position<TNode<E>>> it= parent.getChildren().positions().iterator();
-			while(it.hasNext() && !it.next().element().equals(brother)) 
-				it.next();
-			parent.getChildren().addAfter(it.next(), node);
-			size++;
+			if(isEmpty())
+				throw new InvalidPositionException("The tree is empty.");
+			if(brother.getParent()!=parent)
+				throw new InvalidPositionException("The node p is not the rb's parent");
+			try {
+				Position<TNode<E>> pos= parent.getChildren().first();
+				while(pos!=parent.getChildren().last() && pos.element()!=brother) 
+					pos= parent.getChildren().next(pos);
+				parent.getChildren().addAfter(pos, node);
+				size++;
+			} catch(EmptyListException | InvalidPositionException | BoundaryViolationException exc) {exc.getMessage();}
 			return node;
 		}
 
@@ -190,20 +196,20 @@ public class GeneralTree<E> implements Tree<E> {
 					TNode<E> parent= node.getParent();
 					PositionList<TNode<E>> nodesChildren= node.getChildren();
 					PositionList<TNode<E>> parentsChildren= parent.getChildren();
-					Iterator<Position<TNode<E>>> it= parentsChildren.positions().iterator();
-					while(it.hasNext() && it.next()!=node) 
-						it.next();
+					Position<TNode<E>> pos= parentsChildren.first();
+					while(pos!=parentsChildren.last() && pos.element()!=node) 
+						pos= parentsChildren.next(pos);
 					while(!nodesChildren.isEmpty()) {
 						Position<TNode<E>> toInsert= nodesChildren.first();
-						parentsChildren.addBefore(it.next(), toInsert.element());
+						parentsChildren.addBefore(pos, toInsert.element());
 						toInsert.element().setParent(parent);
 						nodesChildren.remove(toInsert);
 					}
-					parentsChildren.remove(it.next());
+					parentsChildren.remove(pos);
 					size--;
 				}
 				
-			} catch(EmptyListException e) {throw new InvalidPositionException("The node cannot remove.");}
+			} catch(EmptyListException | InvalidPositionException | BoundaryViolationException e) {throw new InvalidPositionException("The node cannot remove.");}
 		}
 		
 		public PositionList<Position<E>> recorrer(Tree<E> t) {

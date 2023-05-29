@@ -1,6 +1,5 @@
 package NodesPackage;
 
-import ADTList.Position;
 import ADTList.*;
 
 public class TNode<E> implements Position<E> {
