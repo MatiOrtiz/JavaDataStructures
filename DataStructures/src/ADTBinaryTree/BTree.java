@@ -187,7 +187,7 @@ public class BTree<E> implements BinaryTree<E> {
 				BTNode<E> node= (BTNode<E>) t.createRoot(root.element());
 				cloneRec(t, root, node);
 			}
-		}catch(InvalidPositionException e) {e.getMessage();}
+		}catch(InvalidOperationException e) {e.getMessage();}
 		return t;
 	}
 	

@@ -350,6 +350,53 @@ public class GeneralTree<E> implements Tree<E> {
 			} catch(InvalidPositionException e) {e.getMessage();}
 		}
 		
+		
+		//TODO implement without use firstCommonAncestor 
+		public boolean existsRoad(TNode<E> n1, TNode<E> n2) {
+			boolean aux= true;
+			try {
+				aux= firstCommonAncestor(n1,n2, this)!=null;
+			}catch(InvalidPositionException e) {e.getMessage();}
+			return aux;
+		}
+		
+		//TODO check
+		public PositionList<TNode<E>> road(TNode<E> n1, TNode<E> n2) {
+			PositionList<TNode<E>> list= new DoubleLinkedList<TNode<E>>();
+			PositionList<TNode<E>> listAux= new DoubleLinkedList<TNode<E>>();
+			try {
+				while(!n1.equals(n2) && !isRoot(n1) && !isRoot(n2)) {
+					list.addLast(n1);
+					listAux.addLast(n2);
+					n1= n1.getParent();				
+					n2= n2.getParent();
+				}
+				if(n1.equals(n2)) {
+					listAux.remove(listAux.first());
+					while(!listAux.isEmpty())
+						list.addLast(listAux.remove(listAux.first()));
+				}else{ 
+					if(isRoot(n1))
+						while(!isRoot(n2)) {
+							listAux.addLast(n2);
+					 		n2= n2.getParent();
+						}
+					else while(!isRoot(n1)) {
+						list.addLast(n1);
+						n1= n1.getParent();
+					}
+					if(n1.equals(n2)) {
+						listAux.remove(listAux.first());
+						while(!listAux.isEmpty())
+							list.addLast(listAux.remove(listAux.first()));
+					}
+				}
+				if(!n1.equals(n2))
+					throw new InvalidPositionException("Any position is invalid.");
+			} catch(InvalidPositionException | EmptyListException e) {e.getMessage();}
+			return list;
+		}
+		
 		public int heightR(E r, Tree<E> t) throws InvalidPositionException {
 			Iterable<Position<E>> iterable= t.positions();
 			TNode<E> node= null;
@@ -398,7 +445,7 @@ public class GeneralTree<E> implements Tree<E> {
 			try {
 				TNode<E> n1= checkPosition(p1).getParent();
 				TNode<E> n2= checkPosition(p2).getParent();
-				while(!n1.equals(n2) && !t.isRoot(n1) && !t.isRoot(n2) && n1.getParent()!=null && n2.getParent()!=null) {
+				while(!n1.equals(n2) && !t.isRoot(n1) && !t.isRoot(n2)) {
 					n1= n1.getParent();
 					n2= n2.getParent();
 				}

@@ -96,5 +96,5 @@ public interface GTTree<E> extends Iterable<E>
 	 * @param E R�tulo que se asignar� a la ra�z del �rbol.
 	 * @throws InvalidOperationException si el �rbol ya tiene un nodo ra�z.
 	 */
-	public void createRoot(E e) throws InvalidOperationException;	
+	public Position<E> createRoot(E e) throws InvalidOperationException;	
 }
