@@ -71,14 +71,16 @@ public class BTree<E> implements BinaryTree<E> {
 	public Iterable<Position<E>> children(Position<E> v) throws InvalidPositionException {
 		BTNode<E> node= checkPosition(v);
 		PositionList<Position<E>> iterable= new DoubleLinkedList<Position<E>>();
-		iterable.addLast(node.left());
-		iterable.addLast(node.right());
+		if(hasLeft(v))
+			iterable.addLast(node.left());
+		if(hasRight(v))
+			iterable.addLast(node.right());
 		return iterable;
 	}
 
 	public boolean isInternal(Position<E> v) throws InvalidPositionException {
 		BTNode<E>node= checkPosition(v);
-		return node.left()!=null && node.right()!=null;
+		return node.left()!=null || node.right()!=null;
 	}
 
 	public boolean isExternal(Position<E> v) throws InvalidPositionException {
@@ -93,11 +95,15 @@ public class BTree<E> implements BinaryTree<E> {
 
 	public Position<E> left(Position<E> v) throws InvalidPositionException, BoundaryViolationException {
 		BTNode<E> node= checkPosition(v);
+		if(node.left()==null)
+			throw new BoundaryViolationException("The node hasn't left child.");
 		return node.left();
 	}
 
 	public Position<E> right(Position<E> v) throws InvalidPositionException, BoundaryViolationException {
 		BTNode<E> node= checkPosition(v);
+		if(node.right()==null)
+			throw new BoundaryViolationException("The node hasn't left child.");
 		return node.right();
 	}
 
@@ -151,10 +157,11 @@ public class BTree<E> implements BinaryTree<E> {
 		else if(node.right()!=null)
 			child= node.right();
 		E removed= node.element();
-		if(parent.left()!=null)
+		if(parent.left()==node)
 			parent.setLeft(child);
 		else parent.setRight(child);
-		child.setParent(parent);
+		if(child!=null)
+			child.setParent(parent);
 		size--;
 		return removed;
 	}
