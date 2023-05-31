@@ -121,6 +121,7 @@ public class BTree<E> implements BinaryTree<E> {
 		if(root!=null)
 			throw new InvalidOperationException("The operation is invalid.");
 		root= new BTNode<E>(r,null);
+		size= 1;
 		return root;
 	}
 
@@ -146,24 +147,40 @@ public class BTree<E> implements BinaryTree<E> {
 
 	public E remove(Position<E> v) throws InvalidOperationException, InvalidPositionException {
 		BTNode<E> node= checkPosition(v);
-		BTNode<E> child= null;
-		BTNode<E> parent= node.parent();
+
 		if(isEmpty())
 			throw new InvalidPositionException("Tree empty.");
 		if(node.left()!=null && node.right()!=null)
 			throw new InvalidOperationException("The node has more than a child");
-		if(node.left()!=null)
-			child= node.left();
-		else if(node.right()!=null)
-			child= node.right();
-		E removed= node.element();
-		if(parent.left()==node)
-			parent.setLeft(child);
-		else parent.setRight(child);
-		if(child!=null)
-			child.setParent(parent);
+		if(node==root) {
+			if(node.left()!=null) {
+				root= node.left();
+				node.left().setParent(null);
+			}	
+			else if(node.right()!=null) {
+				root= node.right();
+				node.right().setParent(null);
+			} else root= null;
+		} else {
+			if(node.left()!=null) {
+				node.left().setParent(node.parent());
+				if(node.parent().left()==node) {
+					node.parent().setLeft(node.left());
+				}
+				else node.parent().setRight(node.left());
+			} else if(node.right()!=null) {
+				node.right().setParent(node.parent());
+				if(node.parent().left()==node)
+					node.parent().setLeft(node.right());
+				else node.parent().setRight(node.right());
+			} else {
+				if(node.parent().left()==node)
+					node.parent().setLeft(null);
+				else node.parent().setRight(null);
+			}
+		}
 		size--;
-		return removed;
+		return node.element();
 	}
 
 	public void attach(Position<E> r, BinaryTree<E> T1, BinaryTree<E> T2) throws InvalidPositionException {
