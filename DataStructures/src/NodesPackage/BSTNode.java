@@ -1,6 +1,6 @@
 package NodesPackage;
 
-public class BSTNode<E extends Comparable<E>> {
+public class BSTNode<E> {
 	
 	private E element;
 	private BSTNode<E> parent, left, right;

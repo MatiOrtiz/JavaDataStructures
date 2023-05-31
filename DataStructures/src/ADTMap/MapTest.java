@@ -2,7 +2,10 @@ package ADTMap;
 
 import static org.junit.Assert.*;
 import java.util.Random;
-import java.util.*;
+import java.util.Vector;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import org.junit.Before;
 import org.junit.Test;
 import Exceptions.InvalidKeyException;
@@ -18,7 +21,7 @@ public class MapTest {
 
 	private Map<Integer, Integer> getMapeo() {
 
-		return new CloseHashMap<Integer, Integer>();
+		return new OpenHashMap<Integer, Integer>();
 
 	}
 
