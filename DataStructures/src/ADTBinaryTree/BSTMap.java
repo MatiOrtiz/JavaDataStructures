@@ -6,7 +6,7 @@ import Exceptions.InvalidKeyException;
 
 public class BSTMap<K extends Comparable<K>,V>  implements Map<K,V> {
 
-	protected BSTree<>
+	protected BSTree<E>
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub

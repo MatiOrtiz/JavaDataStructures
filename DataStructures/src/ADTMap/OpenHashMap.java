@@ -8,7 +8,7 @@ import Exceptions.InvalidPositionException;
 
 public class OpenHashMap<K,V> implements Map<K,V> {
 
-	protected PositionList<Entrance<K,V>>[] array;
+	protected PositionList<Entry<K,V>>[] array;
 	protected int N;
 	protected int n;
 	protected static final float fc= 0.9F;
@@ -18,7 +18,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		n= 0;
 		array= new DoubleLinkedList[N];
 		for(int i=0; i<N; i++) {
-			array[i]= new DoubleLinkedList<Entrance<K,V>>();
+			array[i]= new DoubleLinkedList<Entry<K,V>>();
 		}
 	}
 	
@@ -44,7 +44,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		checkKey(key);
 		int aux= hashFunction(key);
 		V value= null;
-		for(Entrance<K,V> p : array[aux]) {
+		for(Entry<K,V> p : array[aux]) {
 			if(p.getKey().equals(key))
 				value= p.getValue();
 		}
@@ -58,7 +58,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		try {
 			array= new DoubleLinkedList[N];
 			for(int i=0; i<N; i++)
-				array[i]= new DoubleLinkedList<Entrance<K,V>>();
+				array[i]= new DoubleLinkedList<Entry<K,V>>();
 			for(Entry<K,V> e : entrances)
 				this.put(e.getKey(), e.getValue());
 		}catch(InvalidKeyException e) {e.getMessage();}
@@ -83,10 +83,11 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		V val= null;
 		boolean found= false;
 		
-		for(Entrance<K,V> p : array[aux]) 
+		for(Entry<K,V> p : array[aux]) 
 			if(p.getKey().equals(key)) {
 				val= p.getValue();
-				p.setValue(value);
+				Entrance<K,V>e= (Entrance<K,V>)p;
+				e.setValue(value);
 				found= true;
 			}
 		if(found==false) {
@@ -105,7 +106,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		int aux= hashFunction(key);
 		V value= null;
 		try {
-			for(Position<Entrance<K,V>> p : array[aux].positions()) {
+			for(Position<Entry<K,V>> p : array[aux].positions()) {
 				if(p.element().getKey().equals(key)) {
 					value= p.element().getValue();
 					array[aux].remove(p);
@@ -119,7 +120,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	public Iterable<K> keys() {
 		DoubleLinkedList<K> iterable= new DoubleLinkedList<K>();
 		for(int i=0; i<N; i++)
-			for(Entrance<K,V> e : array[i]) {
+			for(Entry<K,V> e : array[i]) {
 				iterable.addLast(e.getKey());
 			}	
 		return iterable;
@@ -128,7 +129,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	public Iterable<V> values() {
 		DoubleLinkedList<V> iterable= new DoubleLinkedList<V>();
 		for(int i=0; i<N; i++)
-			for(Entrance<K,V> e : array[i])
+			for(Entry<K,V> e : array[i])
 				iterable.addLast(e.getValue());
 		return iterable;
 	}
@@ -136,7 +137,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	public Iterable<Entry<K, V>> entries() {
 		DoubleLinkedList<Entry<K,V>> iterable= new DoubleLinkedList<Entry<K,V>>();
 		for(int i=0; i<N; i++)
-			for(Entrance<K,V> e : array[i])
+			for(Entry<K,V> e : array[i])
 				iterable.addLast(e);
 		return iterable;
 	}

@@ -41,7 +41,7 @@ public class BSTree<E extends Comparable<E>> {
 		n.setRight(new BSTNode<E>(null,n));
 	}
 	
-	//TODO
+	//TODO Diapositiva 105 - clase 13
 	public void remove(E x) {
 		
 	}
