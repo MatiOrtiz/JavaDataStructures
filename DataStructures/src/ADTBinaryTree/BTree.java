@@ -14,6 +14,11 @@ public class BTree<E> implements BinaryTree<E> {
 	BTNode<E> root;
 	int size; 
 
+	public BTree() {
+		root= null;
+		size= 0;
+	}
+	
 	public int size() {
 		return size;
 	}
