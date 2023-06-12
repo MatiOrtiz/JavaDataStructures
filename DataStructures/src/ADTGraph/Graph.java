@@ -1,5 +1,8 @@
 package ADTGraph;
 
+import Exceptions.InvalidEdgeException;
+import Exceptions.InvalidVertexException;
+
 public interface Graph<V,E> {
 	
 	/**
