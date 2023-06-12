@@ -16,7 +16,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 	public OpenHashMap() {
 		N= 11;
 		n= 0;
-		array= new DoubleLinkedList[N];
+		array= (PositionList<Entry<K,V>>[]) new DoubleLinkedList[N];
 		for(int i=0; i<N; i++) {
 			array[i]= new DoubleLinkedList<Entry<K,V>>();
 		}
@@ -56,7 +56,7 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 		N= nextPrime(N*2);
 		n= 0;
 		try {
-			array= new DoubleLinkedList[N];
+			array= (PositionList<Entry<K,V>>[]) new DoubleLinkedList[N];
 			for(int i=0; i<N; i++)
 				array[i]= new DoubleLinkedList<Entry<K,V>>();
 			for(Entry<K,V> e : entrances)
@@ -72,7 +72,8 @@ public class OpenHashMap<K,V> implements Map<K,V> {
 			for(int i=2;i<aux/2;i++)
 				if(aux%i==0)
 					primo=false;
-			aux++;
+			if(primo==false)
+				aux++;
 		}
 		return aux;
 	}

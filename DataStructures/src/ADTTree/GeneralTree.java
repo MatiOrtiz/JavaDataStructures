@@ -241,6 +241,27 @@ public class GeneralTree<E> implements Tree<E> {
 			} catch(EmptyTreeException | EmptyQueueException e) {e.getMessage();}
 		}
 		
+		public void level(Tree<E> t) {
+			Queue<Position<E>> queue= new LinkedQueue<Position<E>>();
+			try { 
+				Position<E> pos= t.root();
+				queue.enqueue(pos);
+				queue.enqueue(null);
+				while(!queue.isEmpty()) {
+					pos= queue.dequeue();
+					if(pos!=null) {
+						System.out.print(pos.element() + " ");
+						for(Position<E> p : t.children(pos))
+							queue.enqueue(p);
+					} else {
+						System.out.println();
+						if(!queue.isEmpty())
+							queue.enqueue(null);
+					}
+				}
+			}catch(EmptyTreeException | EmptyQueueException | InvalidPositionException e) {e.getMessage();}
+		}
+		
 		//Calcula la profundidad (desde el nodo hacia arriba)
 		public int depth(Position<E> p, Tree<E> t) {
 			int depth= 0;
@@ -311,6 +332,25 @@ public class GeneralTree<E> implements Tree<E> {
 				}
 			}catch(EmptyTreeException | EmptyListException | InvalidPositionException e) {e.getMessage();}
 			return list;
+		}
+		
+		public PositionList<Position<E>> leftChilden(Tree<E> t) {
+			PositionList<Position<E>> list= new DoubleLinkedList<Position<E>>();
+			try {
+				preOrden(t, t.root(), list);
+			} catch(EmptyTreeException e) {e.getMessage();}
+			return list;
+		}
+		
+		private void preOrden(Tree<E> t, Position<E> p, PositionList<Position<E>> list) {
+			try {
+				Iterator<Position<E>> it= t.children(p).iterator();
+				if(it.hasNext()) 
+					if(t.isInternal(it.next())) {
+						list.addLast(it.next());
+						preOrden(t,it.next(),list);
+					}
+			} catch(InvalidPositionException e) {e.getMessage();}
 		}
 		
 		public void removeLeftChildren(Tree<E> t) {
