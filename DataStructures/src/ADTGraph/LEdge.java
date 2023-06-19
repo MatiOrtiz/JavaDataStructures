@@ -5,11 +5,11 @@ import ADTList.Position;
 public class LEdge<V,E> implements Edge<E> {
 
 	private Position<LEdge<V,E>> posInEdgesList;
-	private Position<LVertex<V,E>> v1, v2;
+	private LVertex<V,E> v1, v2;
 	private E element;
 	private Position<LEdge<V,E>> posEnlv1, posEnlv2;
 	
-	public LEdge(E element, Position<LVertex<V,E>> v1, Position<LVertex<V,E>> v2) {
+	public LEdge(E element, LVertex<V,E> v1, LVertex<V,E> v2) {
 		this.element= element;
 		this.v1= v1;
 		this.v2= v2;
@@ -22,11 +22,11 @@ public class LEdge<V,E> implements Edge<E> {
 		return posInEdgesList;
 	}
 
-	public Position<LVertex<V, E>> getV1() {
+	public LVertex<V, E> getV1() {
 		return v1;
 	}
 
-	public Position<LVertex<V, E>> getV2() {
+	public LVertex<V, E> getV2() {
 		return v2;
 	}
 
@@ -46,11 +46,11 @@ public class LEdge<V,E> implements Edge<E> {
 		this.posInEdgesList = posInEdgesList;
 	}
 
-	public void setV1(Position<LVertex<V, E>> v1) {
+	public void setV1(LVertex<V, E> v1) {
 		this.v1 = v1;
 	}
 
-	public void setV2(Position<LVertex<V, E>> v2) {
+	public void setV2(LVertex<V, E> v2) {
 		this.v2 = v2;
 	}
 
